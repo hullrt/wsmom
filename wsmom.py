@@ -1,4 +1,8 @@
-import pycdlib
+try:
+    import pycdlib
+except ModuleNotFoundError:
+    print("Please ensure Pycdlib is installed.")
+    exit(1)
 import os # Library for OS functions
 
 iso = pycdlib.PyCdlib() # Create a PyCdlib object
