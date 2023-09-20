@@ -3,17 +3,33 @@ try:
 except ModuleNotFoundError:
     print("Please ensure Pycdlib is installed.")
     exit(1)
-import os # Library for OS functions
+import os #Library for OS functions
 
-iso = pycdlib.PyCdlib() # Create a PyCdlib object
+iso = pycdlib.PyCdlib() #Create the PyCdlib object
 
-path_to_iso = input("Enter the absolute path to the ISO file: ")
+pwd = os.getcwd() #Get the current working directory
+path_to_iso = f"{pwd}/Win11_22H2_English_x64v2.iso" #Hardcoded for now
+usb_files = f"{pwd}/usb_files" #Requires folder to exist, currently
 
-pwd = os.getcwd() # Get the current working directory
-path_to_write = f"{pwd}/install.wim" # Path to write the file to
-file_on_iso = "/sources/install.wim" # File to get from the ISO
+iso.open(path_to_iso) #Open the ISO file
+print(path_to_iso) #A lil feedback to terminal
 
-iso.open(path_to_iso) # Open the ISO file
-iso.get_file_from_iso(path_to_write, udf_path = file_on_iso) # Get the file from the ISO
-iso.close() # Close the ISO file
-print(f"{file_on_iso} has been extracted to {pwd}.")
+#walk the iso and get the files and directories
+for path, dirlist, files in iso.walk(udf_path = '/'): 
+    
+    #Create the directories
+    for directory in dirlist:
+        local_dir_path = os.path.join(f"{usb_files}{path}", directory)
+        if not os.path.exists(local_dir_path):
+            os.mkdir(local_dir_path)
+    
+    #Copy the files
+    for file in files:
+        full_path = os.path.join(path, file)
+        if file.endswith(".wim"): #Not ready to work w/that file yet
+            continue
+        iso.get_file_from_iso(local_path=os.path.join(
+            f"{usb_files}{path}", file), udf_path=full_path)
+    
+iso.close() #Close the ISO file
+print("Copy complete. Your files are in the usb_files directory.")
