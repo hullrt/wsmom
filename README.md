@@ -1,6 +1,6 @@
 # 🖥️ Windows Stick Maker on Mac (WSMOM)
 
-WSMOM is a utility that allows users to effortlessly create a Windows 11 bootable USB installer on a Mac. Say goodbye to complicated workarounds; with WSMOM, setting up a Windows 11 installation USB on your Mac is a breeze.
+WSMOM is a utility that allows users to effortlessly create a Windows 11 bootable USB installer on a Mac for installing on a PC. Say goodbye to complicated workarounds; with WSMOM, setting up a Windows 11 installation USB on your Mac is a breeze.
 
 ## 🔧 Requirements
 
